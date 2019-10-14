@@ -1,8 +1,8 @@
 'use strict';
 
-function getPath(elem) {
+function getPath(HTMLelement) {
 
-    function getChildNumber(elem) {
+    function getChildNumber(element) {
         let childNumber = 1;
     
         function includePreviousChild(childNumber, element) {
@@ -14,22 +14,24 @@ function getPath(elem) {
             }
         }
     
-        return includePreviousChild(childNumber, elem);
+        return includePreviousChild(childNumber, element);
     }
     
-    function addPathPart(el, startSelector) {
-        if (el.tagName === 'BODY') {
-            return `${el.tagName} ${startSelector}`;
+    function addPathPart(element, startSelector) {
+        if (element.tagName === 'BODY') {
+            return `${element.tagName} ${startSelector}`;
         } else {
-            const childNumber = getChildNumber(el);
-            startSelector = ` > ${el.tagName}:nth-child(${childNumber}) ${startSelector}`;
-            return addPathPart(el.parentElement, startSelector);
+            const childNumber = getChildNumber(element);
+            startSelector = `> ${element.tagName}:nth-child(${childNumber}) ${startSelector}`;
+            return addPathPart(element.parentElement, startSelector);
         }
     }
 
-    if (elem.tagName === 'HTML' || elem.tagName === 'BODY') {
-        return elem.tagName;
+    const tag = HTMLelement.tagName;
+
+    if (tag === 'HTML' || tag === 'BODY') {
+        return tag;
     } else {
-        return addPathPart(elem, '')
+        return addPathPart(HTMLelement, '')
     }
 }
