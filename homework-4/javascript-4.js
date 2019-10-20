@@ -21,19 +21,24 @@ class MyTree extends HTMLElement {
         this.attachShadow({mode: 'open'});
     }
 
+    addLeafShadow(id) {
+        this.shadowRoot.innerHTML += `<my-leaf id=${id}></my-leaf>`;
+    }
+
     connectedCallback() {
         const treeTemplate = JSON.parse(this.getAttribute('treeTemplate'));
+
         if (treeTemplate !== undefined) {
             if (treeTemplate.items !== undefined) {
                 for (let i=0; i<treeTemplate.items.length; i++){
                     if (treeTemplate.items[i].items !== undefined) {
                         this.shadowRoot.innerHTML += `<my-tree treeTemplate=${JSON.stringify(treeTemplate.items[i])}></my-tree>`;
                     } else {
-                        this.shadowRoot.innerHTML += `<my-leaf id=${treeTemplate.items[i].id}></my-leaf>`
+                        this.addLeafShadow(treeTemplate.items[i].id);
                     }
                 }
             } else {
-                this.shadowRoot.innerHTML += `<my-leaf id=${treeTemplate.id}></my-leaf>`
+                this.addLeafShadow(treeTemplate.id);
             }
         }
     }
