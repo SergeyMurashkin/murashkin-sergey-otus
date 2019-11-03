@@ -5,19 +5,19 @@ const http = require('http');
 function sendRequests(requestCount, type) {
 
     const options = {
-        host: "",
-        port: "8888",
-        path: "https://localhost",
+        host: '',
+        port: '8888',
+        path: 'https://localhost',
     }
 
     function sendConsistentRequests(options, count) {
-        if (count > 0) {
-            http.get(options, function(res) {
-                res.setEncoding('utf8');
-                res.on('data', console.log);
-                sendConsistentRequests(options,count-1);
-            });
-        }
+        if (count <= 0) return;
+        
+        http.get(options, function(res) {
+            res.setEncoding('utf8');
+            res.on('data', console.log);
+            sendConsistentRequests(options,count-1);
+        });
     }
 
     function sendParallelRequests(options, count) {
