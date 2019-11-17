@@ -3,6 +3,8 @@ import React from 'react';
 import SearchBar from './SearchBar.jsx';
 import RecordedCities from './RecordedCities.jsx';
 import CityInfo from './CityInfo.jsx';
+import Preloader from './Preloader.jsx';
+import CityNotFound from './CityNotFound.jsx';
 
 class WeatherApp extends React.Component{
 
@@ -16,20 +18,14 @@ class WeatherApp extends React.Component{
 
         this.setWantedCity = this.setWantedCity.bind(this);
         this.saveWantedCity = this.saveWantedCity.bind(this);
+        this.renderWeather = this.renderWeather.bind(this);
     }
 
     componentDidMount() {
         const recordedCities = JSON.parse(localStorage.getItem('recordedCities'));
-
-        if (recordedCities === null) {
-            this.setState({
-                recordedCities: []
-            })
-        } else {
-            this.setState({
-                recordedCities: [... new Set(recordedCities)]
-            })
-        }
+        this.setState({
+            recordedCities: recordedCities === null ? [] : [... new Set(recordedCities)]
+        })
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -48,15 +44,9 @@ class WeatherApp extends React.Component{
                 .then(res => res.json())
                 .then(
                     (result) => {
-                        if (result.cod === 200) {
-                            this.setState({
-                                weather: result
-                            });
-                        } else {
-                            this.setState({
-                                weather: null
-                            });
-                        }
+                        this.setState({
+                            weather: result.cod === 200 ? result : null
+                        });
                     },
                     (error) => {
                         this.setState({
@@ -87,14 +77,25 @@ class WeatherApp extends React.Component{
         })
     }
 
+    renderWeather() {
+        const weather = this.state.weather;
+        if (weather === null) {
+            return <CityNotFound />
+        } else if (typeof(weather) === "string") {
+            return <Preloader />
+        } else {    
+            return <CityInfo weather={weather} />
+        }
+    }
+
     render() {
         return (
             <div className="weatherApp" style={{display:"flex", flexDirection: "row"}} >
                 <div className="weatherBar" style={{marginRight: "50px"}} >
                     <SearchBar  setWantedCity={this.setWantedCity} saveWantedCity={this.saveWantedCity} />
                     <RecordedCities recordedCities={this.state.recordedCities} setWantedCity={this.setWantedCity} />
-                </div>    
-                <CityInfo weather={this.state.weather} />
+                </div>
+                {this.renderWeather()}
             </div>
         );
     }

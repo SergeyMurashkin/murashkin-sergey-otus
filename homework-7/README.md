@@ -2,10 +2,7 @@
 
     Run guide
 ----------------
-1) From folder 'server' :
+
+From root folder :
 -   npm install
-2) From root folder :
--   npm install
--   npm run build
--   npm run server
-3) Open browser  localhost:4000
+-   npm run start

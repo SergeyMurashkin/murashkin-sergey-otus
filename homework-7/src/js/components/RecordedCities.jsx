@@ -5,7 +5,6 @@ class RecordedCities extends React.Component{
     constructor(props){
         super(props);
 
-        this.renderCities = this.renderCities.bind(this);
         this.setWantedCitiesToApp = this.setWantedCitiesToApp.bind(this);
     }
 
@@ -13,19 +12,18 @@ class RecordedCities extends React.Component{
         this.props.setWantedCity(event.target.innerText)
     }
 
-    renderCities() {
-        const recordedCities = this.props.recordedCities;
-
-        return recordedCities.map((city, index) => {
-            return <p key={index} onClick={this.setWantedCitiesToApp}>{city}</p>
-        });
-    }
-
     render() {
+
         return (
             <div className="recordedCities">
                 <p>Список сохранённых городов:</p>
-                {this.renderCities()}
+                {
+                    (() => {
+                        return this.props.recordedCities.map((city, index) => {
+                            return <p key={index} onClick={this.setWantedCitiesToApp}>{city}</p>
+                        });
+                    })()
+                }
             </div>
         );
     }
