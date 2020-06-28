@@ -1,0 +1,19 @@
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+
+@import './menu.scss';
+
+html {
+
+    body {
+        display: flex;
+        justify-content: center;
+    
+        #app {
+            display: flex;
+            justify-content: center;
+            background-color: #ffffff;
+        }
+    }
+}
