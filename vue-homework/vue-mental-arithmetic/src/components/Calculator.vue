@@ -8,7 +8,8 @@
                         v-bind:key="i">
                         <v-btn v-if="b!==''"
                             @click="$emit('add',$event.target.value)"
-                            type="button" :value=b class="white--text v-btn v-btn--rounded theme--light elevation-8 v-size--small deep-purple accent-4">{{b}}</v-btn>
+                            :value=b color="orange" fab big class="calculator__operator">
+                            {{b}}</v-btn>
                     </td>
                 </tr> 
             </td>
@@ -19,7 +20,7 @@
                         v-bind:key="i">
                         <v-btn
                             @click="$emit('add',$event.target.value)"
-                            type="button" :value=o class="calculator__operator">{{o}}</v-btn>
+                            :value=o color="grey" fab big class="calculator__operator">{{o}}</v-btn>
                     </td>
                 </tr> 
             </td>
@@ -40,6 +41,9 @@ export default {
 
 </script>
 
-<style>
-
+<style scoped>
+    .calculator__operator{
+        transform-origin: center center;
+        margin: 10px
+    }
 </style>

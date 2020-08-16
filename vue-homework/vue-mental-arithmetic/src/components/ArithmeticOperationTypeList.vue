@@ -1,12 +1,12 @@
 <template>
-    <ul>
+    <v-list>
         <ArithmeticOperationTypeItem 
             v-for="arithmeticOperationType of arithmeticOperationTypes" 
             v-bind:arithmeticOperationType="arithmeticOperationType"
             v-bind:key="arithmeticOperationType.id"
             v-on:change-value="changeValue"
         />
-    </ul>
+    </v-list>
 </template>
 
 <script>

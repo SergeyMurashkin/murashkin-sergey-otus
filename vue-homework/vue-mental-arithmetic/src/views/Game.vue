@@ -1,19 +1,26 @@
 <template>
-    <div id="game">
-        <button>
-            <router-link to="/menu">&times; отмена</router-link>
-        </button>
+    <v-app id="game">
+        <router-link to="/menu">
+            <v-btn @click="stopTimer">&times; отмена</v-btn>
+        </router-link>
         <div>
-           timer
+           {{timer}}
         </div>
         <Calculator />
-    </div>
+    </v-app>
 </template>
 
 <script>
 import Calculator from '@/components/Calculator'
 
 export default {
+    data() {
+        return {
+            timer: 0,
+            intervalId: 0
+        }
+    },
+
     props: {
         dayOfTraining: {
             type: Number,
@@ -33,11 +40,11 @@ export default {
         },
         duration: {
             type: Number,
-            default: 0
+            default: 1
         },
         complexity: {
             type: Number,
-            default: 0
+            default: 1
         },
         sum: {
             type: Boolean,
@@ -60,9 +67,35 @@ export default {
             default: false
         }
     },
+
     components: {
         Calculator
+    },
+
+    mounted() {
+        this.timer = this.duration*60
+        this.startGame();
+    },
+
+    methods: {
+        startGame: function() {
+            console.log('game start')
+            this.startTimer();
+
+        },
+        startTimer: function() {
+            console.log('timer start')
+            this.intervalId = setInterval(()=>{
+                        this.timer--;
+                        console.log(this.timer);  
+                    },1000)
+        },
+        stopTimer: function() {
+            clearInterval(this.intervalId)
+            console.log('stop timer')
+        }
     }
+
 }
 
 </script>

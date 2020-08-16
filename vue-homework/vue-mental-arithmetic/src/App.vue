@@ -1,11 +1,9 @@
 <template>
-  <div id="app">
+  <v-container id="app">
     <router-view />
-  </div>
+  </v-container>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-}
+  a {text-decoration: none;}
 </style>

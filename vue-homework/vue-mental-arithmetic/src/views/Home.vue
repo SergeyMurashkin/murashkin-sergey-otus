@@ -1,7 +1,8 @@
 <template>
-    <div id="home">
+    <v-app id="home">
         <h2>Игра-приложение: Арифметический счёт</h2>
-        <hr/>
-        <router-link to="/menu">Menu</router-link>
-    </div>
+        <router-link to="/menu">
+            <v-btn>Menu</v-btn>
+        </router-link>
+    </v-app>
 </template>
